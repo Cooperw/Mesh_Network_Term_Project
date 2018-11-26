@@ -3,7 +3,7 @@
  Developed by Cooper Wiegand, John Vanderhoofven, and Jiping Lu at Colorado State University. 
 
 ## Overview ##
-A set of programs that operate a rudementary mesh-type network. The network currently communicates over standard 433 MHz chips and can exchange text messages as well as commands which are run automatically on the destination device in a fork/exec model.
+A set of programs that operate a rudementary mesh-type network. The network currently communicates over standard 433 MHz chips and can exchange text messages as well as commands which are run automatically on the destination device in a fork/exec model. The 433 MHz setup relies on JCL_RF.py and the origional "library" can be found at https://pypi.org/project/rpi-rf/.
 
 ## Packet Structure ##
 ```
