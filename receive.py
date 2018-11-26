@@ -10,6 +10,8 @@ import subprocess
 from JC_RF import RFDevice
 
 rfdevice = None
+
+#Binary number 1-7
 number = "000"
 
 def ForMe(inbound):
