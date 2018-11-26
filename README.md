@@ -5,7 +5,7 @@
 ## Overview ##
 A set of programs that operate a rudementary mesh-type network. The network currently communicates over standard 433 MHz chips and can exchange text messages as well as commands which are run automatically on the destination device in a fork/exec model. The 433 MHz setup relies on JCL_RF.py and the origional "library" can be found at https://pypi.org/project/rpi-rf/.
 
-## Packet Structure ##
+#### Packet Structure ####
 ```
 ################################################################################################
 #           S  A  M  P  L  E      1  0  0    B  I  T      J  C  L    P  A  C  K  E  T          #
@@ -33,16 +33,16 @@ Part Num and Total Parts together allow for a message to be divided up to a maxi
 ```
 
 ## Setup ##
-```
-Add your device "phone number" to builder.py and receiver.py (should be a binary 1-7)
+- Add your device "phone number" to builder.py and receiver.py (should be a binary 1-7)
 
-Add crontab entry
+- Add crontab entry
+```
 * * * * * /home/pi/370_Term_Project/process_packets.py >> /home/pi/370_Term_Project/newMessages.log
-
-Follow the wiring diagrams found at https://pypi.org/project/rpi-rf/
-
-Start your receiver and you should now be part of the network
 ```
+
+- Follow the wiring diagrams found at https://pypi.org/project/rpi-rf/#wiring-diagram-example.
+
+- Start your receiver and you should now be part of the network
 
 ## Receiving ##
 
