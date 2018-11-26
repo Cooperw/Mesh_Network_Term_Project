@@ -41,8 +41,8 @@ def extend(inp, length):
 
 ######################################################
 
-# Set From Address
-from_adr = "011"
+# Set From Address, binary 1-7
+from_adr = "000"
 
 # Get To Address
 to_adr = input('To Address: ')
