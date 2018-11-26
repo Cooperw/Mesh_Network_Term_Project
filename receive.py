@@ -10,7 +10,7 @@ import subprocess
 from JC_RF import RFDevice
 
 rfdevice = None
-number = "011"
+number = "000"
 
 def ForMe(inbound):
 	print("New data from "+str(int(inbound[3:6], 2))+"!")
