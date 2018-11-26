@@ -38,6 +38,10 @@ Add your device "phone number" to builder.py and receiver.py (should be a binary
 
 Add crontab entry
 * * * * * /home/pi/370_Term_Project/process_packets.py >> /home/pi/370_Term_Project/newMessages.log
+
+Follow the wiring diagrams found at https://pypi.org/project/rpi-rf/
+
+Start your receiver and you should now be part of the network
 ```
 
 ## Receiving ##
