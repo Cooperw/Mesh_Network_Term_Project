@@ -35,7 +35,7 @@ Part Num and Total Parts together allow for a message to be divided up to a maxi
 ## Setup ##
 - Add your device "phone number" to builder.py and receiver.py (should be a binary 1-7)
 
-- Add crontab entry
+- Add crontab entry (Below will check for new messages every minute)
 ```
 * * * * * /home/pi/370_Term_Project/process_packets.py >> /home/pi/370_Term_Project/newMessages.log
 ```
