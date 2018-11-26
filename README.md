@@ -15,7 +15,10 @@ A set of programs that operate a rudementary mesh-type network. The network curr
 #   3    |     3    |    12    |       4      |     4    |      4      |    62     |     8     #
 ################################################################################################
 
-Sender and receiver are 3 bit addresses and the datetime is the number of seconds that have passed this hour (which is calculated back to a real time, we can only guarentee acuracy of packets that reach their destination within 60 miniutes).
+Sender and receiver are 3 bit addresses.
+
+Datetime is the number of seconds that have passed in the last hour.
+We can only guarentee accuracy of packets that reach their destination within 60 miniutes.
 
 The control code is a 4 bit number which determines how the data is processed:
 0: ACK
@@ -25,7 +28,8 @@ The control code is a 4 bit number which determines how the data is processed:
 4: Encrypted Remote Code Execution
 5-15: Undefined
 
-Part Num and Total Parts together allow for a message to be divided up to a maximum of 16 parts which are re-assembled by the receiver.
+Part Num and Total Parts together allow for a message to be divided up to a maximum of 
+16 parts which are re-assembled by the receiver.
 ```
 
 ## Setup ##
