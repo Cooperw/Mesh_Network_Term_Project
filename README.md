@@ -1,7 +1,9 @@
 # 370_Term_Project
 
+ Developed by Cooper Wiegand, John Vanderhoofven, and Jiping Lu at Colorado State University. 
+
 ## Overview ##
-A set of programs that operate a rudementary mesh-type network. The network currently communicates over standard 433 MHz chips and can exchange text messages as well as commands which are run automatically on the destination device in a fork/exec model. Developed by Cooper Wiegand, John Vanderhoofven, and Jiping Lu.
+A set of programs that operate a rudementary mesh-type network. The network currently communicates over standard 433 MHz chips and can exchange text messages as well as commands which are run automatically on the destination device in a fork/exec model.
 
 ## Packet Structure ##
 ```
