@@ -18,7 +18,7 @@ A set of programs that operate a rudementary mesh-type network. The network curr
 Sender and receiver are 3 bit addresses.
 
 Datetime is the number of seconds that have passed in the last hour.
-We can only guarentee accuracy of packets that reach their destination within 60 miniutes.
+We can only guarentee accuracy of packets that reach their destination within 1 hour.
 
 The control code is a 4 bit number which determines how the data is processed:
 0: ACK
