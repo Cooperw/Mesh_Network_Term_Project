@@ -56,7 +56,7 @@ def verfiy_packets(packets):
 processed = []
 
 lines = []
-with open("/home/pi/TP/unprocessed_packets.log","r") as input:
+with open("/home/pi/370_Term_Project/unprocessed_packets.log","r") as input:
 	for line in input:
 		if(len(line) > header_len):
 			lines.append(line)
@@ -131,10 +131,10 @@ for header in headers:
 			print("Control Code Unknown!")
 			print(entry)
 
-with open("/home/pi/TP/unprocessed_packets.log","r") as input:
-	with open("/home/pi/TP/unprocessed_packets.tmp","w") as output:
+with open("/home/pi/370_Term_Project/unprocessed_packets.log","r") as input:
+	with open("/home/pi/370_Term_Project/unprocessed_packets.tmp","w") as output:
 		for line in input:
 			if line not in processed:
 				if len(line) > header_len:
 					output.write(line)
-subprocess.call(['mv','/home/pi/TP/unprocessed_packets.tmp','/home/pi/TP/unprocessed_packets.log'])
+subprocess.call(['mv','/home/pi/370_Term_Project/unprocessed_packets.tmp','/home/pi/370_Term_Project/unprocessed_packets.log'])
