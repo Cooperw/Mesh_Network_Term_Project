@@ -76,7 +76,7 @@ for header in headers:
 
 		message = ""
 		for packet in packets:
-			message += packet[header_len+part_num_len+total_parts_len:-9]
+			message += packet[header_len+part_num_len+total_parts_len:-1*(check_sum_len+1)]
 			processed.append(packet)
 		c = 0
 
