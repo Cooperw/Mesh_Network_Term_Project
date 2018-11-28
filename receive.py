@@ -39,16 +39,36 @@ rfdevice = None
 #Binary number 1-7
 number = "011"
 
+def SendAck(inbound):
+	newpacket = ""
+	newpacket += inbound[3:6]	#recieve
+	newpacket += inbound[:3]	#send
+	newpacket += inbound[6:18]	#time
+	newpacket += "0000"		#cc
+	newpacket += [22:30]		##parts
+
+	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
+        checksum = bin(int(hash[-1], 16))[2:].zfill(4)
+	newpacket += checksum
+	bashCommand = "python3 send.py " + str(packet)
+        process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+        output, error = process.communicate()
+
 def ForMe(inbound):
 	packet = inbound[:-4]
 	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
 	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 
 	if(checksum == inbound[-4:]):
-		print("New data from "+str(int(inbound[3:6], 2))+"!")
-		bashCommand = "echo " + inbound + " >> unprocessed_packets.log"
-		process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
-		output, error = process.communicate()
+		if(inbound[18:22] == "0000"):
+			#ACK
+			print("Got Ack:" + inbound)
+		else:
+			print("New data from "+str(int(inbound[3:6], 2))+"!")
+			bashCommand = "echo " + inbound + " >> unprocessed_packets.log"
+			process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
+			output, error = process.communicate()
+			SendAck(inbound)
 
 def Forward(inbound):
 	print("Forwarding from "+str(int(inbound[3:6], 2))+" to "+str(int(inbound[:3], 2))+"!")
