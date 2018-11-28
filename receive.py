@@ -40,16 +40,16 @@ rfdevice = None
 number = "011"
 
 def SendAck(inbound):
-	newpacket = ""
-	newpacket += inbound[3:6]	#recieve
-	newpacket += inbound[:3]	#send
-	newpacket += inbound[6:18]	#time
-	newpacket += "0000"		#cc
-	newpacket += inbound[22:30]		##parts
+	packet = ""
+	packet += inbound[3:6]	#recieve
+	packet += inbound[:3]	#send
+	packet += inbound[6:18]	#time
+	packet += "0000"		#cc
+	packet += inbound[22:30]		##parts
 
 	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
 	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
-	newpacket += checksum
+	packet += checksum
 	bashCommand = "python3 send.py " + str(packet)
 	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
 	output, error = process.communicate()
