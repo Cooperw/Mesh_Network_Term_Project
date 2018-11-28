@@ -2,3 +2,4 @@
 
 git reset --hard origin/master
 git pull
+nano builder.py receiver.py
