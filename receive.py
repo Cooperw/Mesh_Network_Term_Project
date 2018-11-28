@@ -42,7 +42,7 @@ number = "011"
 def ForMe(inbound):
 	packet = inbound[:-4]
 	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
-        checksum = bin(int(hash[-1], 16))[2:].zfill(4)
+	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 
 	if(checksum == inbound[-4:]):
 		print("New data from "+str(int(inbound[3:6], 2))+"!")
