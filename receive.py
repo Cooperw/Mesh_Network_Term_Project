@@ -71,7 +71,11 @@ def ForMe(inbound):
 			SendAck(inbound)
 
 def Forward(inbound):
-	if(inbound[:3] == "000" and inbound[:3] != number):
+	packet = inbound[:-4]
+        hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
+        checksum = bin(int(hash[-1], 16))[2:].zfill(4)
+
+	if(checksum == inbound[-4:]):
 		print("Forwarding from "+str(int(inbound[3:6], 2))+" to "+str(int(inbound[:3], 2))+"!")
 		bashCommand = "python3 send.py " + str(inbound)
 		process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
