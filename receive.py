@@ -71,10 +71,11 @@ def ForMe(inbound):
 			SendAck(inbound)
 
 def Forward(inbound):
-	print("Forwarding from "+str(int(inbound[3:6], 2))+" to "+str(int(inbound[:3], 2))+"!")
-	bashCommand = "python3 send.py " + str(inbound)
-	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-	output, error = process.communicate()
+	if(inbound[:3] == "000" and inbound[:3] != number):
+		print("Forwarding from "+str(int(inbound[3:6], 2))+" to "+str(int(inbound[:3], 2))+"!")
+		bashCommand = "python3 send.py " + str(inbound)
+		process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+		output, error = process.communicate()
 
 # pylint: disable=unused-argument
 def exithandler(signal, frame):
