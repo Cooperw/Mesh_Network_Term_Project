@@ -45,14 +45,14 @@ def SendAck(inbound):
 	newpacket += inbound[:3]	#send
 	newpacket += inbound[6:18]	#time
 	newpacket += "0000"		#cc
-	newpacket += [22:30]		##parts
+	newpacket += inbound[22:30]		##parts
 
 	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
-        checksum = bin(int(hash[-1], 16))[2:].zfill(4)
+	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 	newpacket += checksum
 	bashCommand = "python3 send.py " + str(packet)
-        process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
+	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+	output, error = process.communicate()
 
 def ForMe(inbound):
 	packet = inbound[:-4]
