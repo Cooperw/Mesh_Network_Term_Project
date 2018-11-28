@@ -6,9 +6,10 @@
 ################################################################################################
 # Sender | Receiver | DateTime | Control Code | Part Num | Total Parts |   Data    | Check Sum #
 #--------|----------|----------|--------------|----------|-------------|-----------|-----------#
-#   3    |     3    |    12    |       4      |     4    |      4      |    62     |     8     #
+#   3    |     3    |    12    |       4      |     4    |      4      |    32     |     4     #
 ################################################################################################
 
+import hashlib
 import subprocess
 import datetime
 import re
@@ -23,8 +24,8 @@ datetime_len = 12;
 control_code_len = 4;
 part_num_len = 4;
 total_parts_len = 4;
-data_len = 62;
-check_sum_len = 8;
+data_len = 32;
+check_sum_len = 4;
 
 ######################################################
 # Methods
@@ -42,7 +43,7 @@ def extend(inp, length):
 ######################################################
 
 # Set From Address, binary 1-7
-from_adr = "000"
+from_adr = "011"
 
 # Get To Address
 to_adr = input('To Address: ')
@@ -97,6 +98,8 @@ for piece in splitBody:
 	packet = header + piece
 
 	# Tack checksum packet
+	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
+	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 	packet += checksum
 
 	#Output
