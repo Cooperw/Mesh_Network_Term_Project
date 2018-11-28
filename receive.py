@@ -72,8 +72,8 @@ def ForMe(inbound):
 
 def Forward(inbound):
 	packet = inbound[:-4]
-        hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
-        checksum = bin(int(hash[-1], 16))[2:].zfill(4)
+	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
+	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 
 	if(checksum == inbound[-4:]):
 		print("Forwarding from "+str(int(inbound[3:6], 2))+" to "+str(int(inbound[:3], 2))+"!")
