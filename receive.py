@@ -44,7 +44,7 @@ def ForMe(inbound):
 	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
         checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 
-	if(checksum = inbound[-4:]):
+	if(checksum == inbound[-4:]):
 		print("New data from "+str(int(inbound[3:6], 2))+"!")
 		bashCommand = "echo " + inbound + " >> unprocessed_packets.log"
 		process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
