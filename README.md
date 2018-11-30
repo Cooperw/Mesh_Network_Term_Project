@@ -1,6 +1,10 @@
 # 370_Term_Project
-
- Developed by Cooper Wiegand, John Vanderhoofven, and Jiping Lu at Colorado State University. 
+ 
+ [Reserach Paper](https://docs.google.com/document/d/1NyC_Sf42hO-JUMay74-VKHViBrYexRQepyeW85B04mw/edit?usp=sharing)
+ 
+ [Outline](https://docs.google.com/document/d/1OVfjGXZzx0KkbRxPxZe4xIjUputQPQnoWX9WUllVHjY/edit?usp=sharing)
+ 
+ Developed by Cooper Wiegand, John Vanderhoofven, and Jiping Lu at Colorado State University.
 
 ## Overview ##
 A set of programs that operate a rudementary mesh-type network. The network currently communicates over standard 433 MHz chips and can exchange text messages as well as commands which are run automatically on the destination device in a fork/exec model. The 433 MHz setup relies on JCL_RF.py and the origional "library" can be found at https://pypi.org/project/rpi-rf/.
