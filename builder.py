@@ -14,6 +14,7 @@ import subprocess
 import datetime
 import re
 import sys
+import mmap
 
 ######################################################
 # Vars
@@ -43,7 +44,7 @@ def extend(inp, length):
 ######################################################
 
 # Set From Address, binary 1-7
-from_adr = "011"
+from_adr = "010"
 
 if(len(sys.argv) != 4):
 	print(sys.argv[0] + " <to> <control_code> <message>")
@@ -115,8 +116,25 @@ for piece in splitBody:
 	#Incriment for next packet
 	part_num += 1
 
-for packet in myPackets:
-	print(packet) #binary packet
-	bashCommand = "python3 send.py " + str(packet)
-	process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-	output, error = process.communicate()
+ackPackets = []
+sendCount = 0
+subprocess.Popen("echo '' > ack.log", shell=True, stdout=subprocess.PIPE)
+with open("ack.log", "r+b") as file:
+	while len(myPackets) is not len(ackPackets) and sendCount < 5:
+		sendCount += 1
+		print("Received "+str(len(ackPackets))+"/"+str(len(myPackets))+": "+str(ackPackets))
+		for i in range(0,len(myPackets)):
+			if i not in ackPackets:
+				print(str(i)+":"+myPackets[i]) #binary packet
+				bashCommand = "python3 send.py " + str(myPackets[i])
+				process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
+				output, error = process.communicate()
+				try:
+					mm = mmap.mmap(file.fileno(), 0)
+					line = mm.readline().decode()
+					ind = int(line[22:26], 2)
+					mm.close()
+					if ind not in ackPackets:
+						ackPackets.append(ind)
+				except:
+					pass

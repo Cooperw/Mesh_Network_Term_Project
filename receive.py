@@ -17,6 +17,7 @@ import sys
 import time
 import logging
 import subprocess
+import mmap
 
 from JC_RF import RFDevice
 
@@ -37,7 +38,7 @@ header_len = sender_len + receiver_len + datetime_len + control_code_len;
 rfdevice = None
 
 #Binary number 1-7
-number = "011"
+number = "010"
 
 def SendAck(inbound):
 	packet = ""
@@ -62,7 +63,9 @@ def ForMe(inbound):
 	if(checksum == inbound[-4:]):
 		if(inbound[18:22] == "0000"):
 			#ACK
-			print("Got Ack:" + inbound)
+			print("New Ack!")
+			with open("ack.log", "wb") as file:
+				file.write(str.encode(inbound))
 		else:
 			print("New data from "+str(int(inbound[3:6], 2))+"!")
 			bashCommand = "echo " + inbound + " >> unprocessed_packets.log"
@@ -111,7 +114,6 @@ while True:
 		#Filters only duplicates within a session
 		if inbound not in past_packets:
 			past_packets.append(inbound)
-			print(inbound)
 			if inbound[:3] == "000":
 				#Capture and relay broadcast
 				ForMe(inbound)
