@@ -46,7 +46,7 @@ def extend(inp, length):
 ######################################################
 
 # Set From Address, binary 1-7
-from_adr = "010"
+from_adr = "001"
 
 if(len(sys.argv) != 4):
 	print(sys.argv[0] + " <to> <control_code> <message>")
@@ -128,7 +128,7 @@ with open("ack.log", "r+b") as file:
 		print("Received "+str(len(ackPackets))+"/"+str(len(myPackets))+": "+str(ackPackets))
 		for i in range(0,len(myPackets)):
 			if i not in ackPackets:
-				time.sleep(3)
+				time.sleep(1)
 
 				print(str(i)+":"+myPackets[i]) #binary packet
 
