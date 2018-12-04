@@ -35,7 +35,7 @@ header_len = sender_len + receiver_len + datetime_len + control_code_len;
 rxdevice = None
 
 #Binary number 1-7
-number = "001"
+number = "010"
 
 def SendAck(inbound):
 	packet = ""
@@ -48,13 +48,15 @@ def SendAck(inbound):
 	hash = hashlib.md5(packet.encode('utf-8')).hexdigest()
 	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 	packet += checksum
-#	txdevice = RFDevice(17)
-#	txdevice.enable_tx()
-#	txdevice.tx_code(str(packet), None, None)
-#	txdevice.cleanup()
 	bashCommand = "python3 ./send.py " + str(packet)
 	process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
+
+	# Call processor
+	bashCommand = "python3 ./process_packets.py >> newMessages.log"
+	processTwo = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
+	output, error = processTwo.communicate()
+
 
 def ForMe(inbound, Ack):
 	packet = inbound[:-4]
@@ -83,10 +85,6 @@ def Forward(inbound):
 
 	if(checksum == inbound[-4:] and inbound[3:6] != "000" and inbound[3:6] != number):
 		print("Forwarding from "+str(int(inbound[3:6], 2))+" to "+str(int(inbound[:3], 2))+"!")
-#		txdevice = RFDevice(17)
-#		txdevice.enable_tx()
-#		txdevice.tx_code(str(inbound), None, None)
-#		txdevice.cleanup()
 		bashCommand = "python3 ./send.py " + str(inbound)
 		process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
 		output, error = process.communicate()
@@ -115,7 +113,6 @@ while True:
 		#Filters only duplicates within a session
 		if inbound not in past_packets:
 			past_packets.append(inbound)
-#			rxdevice.cleanup()
 			if inbound[:3] == "000":
 				#Capture and relay broadcast
 				ForMe(inbound, False)
@@ -127,8 +124,6 @@ while True:
 				else:
 					#Not for me, forward
 					Forward(inbound)
-#			rxdevice = RFDevice(27)
-#			rxdevice.enable_rx()
 #		else Duplicate dropped
 	time.sleep(0.01)
 rxdevice.cleanup()

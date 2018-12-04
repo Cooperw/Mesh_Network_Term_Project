@@ -103,7 +103,7 @@ for header in headers:
 			#Text
 			print("To:\t"+entry[0])
 			print("From:\t"+entry[1])
-			print("Date:\t"+entry[2])
+			#print("Date:\t"+entry[2])
 			print("Message:\t"+entry[4])
 
 		elif (int(entry[3]) == 2):
@@ -114,7 +114,7 @@ for header in headers:
 			#RCE
 			print("To:\t"+entry[0])
 			print("From:\t"+entry[1])
-			print("Date:\t"+entry[2])
+			#print("Date:\t"+entry[2])
 			print("Command: "+entry[4])
 
 			subprocess.Popen(entry[4], shell=True)

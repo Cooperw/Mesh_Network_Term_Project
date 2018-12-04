@@ -1,5 +1,0 @@
-#! /bin/bash
-
-git reset --hard origin/master
-git pull
-nano builder.py receive.py
