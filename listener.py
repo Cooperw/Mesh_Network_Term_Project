@@ -72,9 +72,8 @@ def ForMe(inbound, Ack):
 			process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
 			output, error = process.communicate()
 			if Ack:
+				print("Sending Ack")
 				SendAck(inbound)
-	else:
-		print(inbound)
 
 def Forward(inbound):
 	packet = inbound[:-4]
@@ -95,12 +94,11 @@ def exithandler(signal, frame):
 ###################################################33
 
 signal.signal(signal.SIGINT, exithandler)
-timestamp = None
-past_packets = []
-
 # Listen on GPIO 27
 rxdevice = RFDevice(27)
 rxdevice.enable_rx()
+timestamp = None
+past_packets = []
 
 while True:
 	if rxdevice.rx_code_timestamp != timestamp:

@@ -195,7 +195,7 @@ class RFDevice:
         timestamp = int(time.perf_counter() * 1000000)
         duration = timestamp - self._rx_last_timestamp
 
-        if duration > 5000:
+        if duration > 3000:
             if duration - self._rx_timings[0] < 200:
                 self._rx_repeat_count += 1
                 self._rx_change_count -= 1
