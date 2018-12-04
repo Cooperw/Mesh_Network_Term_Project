@@ -100,10 +100,20 @@ class RFDevice:
             _LOGGER.debug("TX disabled")
         return True
 
-    def tx_code(self, code):
+    def tx_code(self, code, tx_proto=None, tx_pulselength=None):
 	# This code param is now raw binary data (JCL)
-        self.tx_proto = 1
-        self.tx_pulselength = PROTOCOLS[self.tx_proto].pulselength
+        """
+        Optionally set protocol and pulselength.
+        When none given reset to default protocol and pulselength.
+        """
+        if tx_proto:
+            self.tx_proto = tx_proto
+        else:
+            self.tx_proto = 1
+        if tx_pulselength:
+            self.tx_pulselength = tx_pulselength
+        else:
+            self.tx_pulselength = PROTOCOLS[self.tx_proto].pulselength
         _LOGGER.debug("TX code: " + str(code))
 	# We added a '1' so that leading zeros are not cut off on the packet
         return self.tx_bin('1'+str(code))
@@ -191,9 +201,11 @@ class RFDevice:
                 self._rx_change_count -= 1
                 if self._rx_repeat_count == 2:
 		# We cut down on the loop to save time from checking unused protocols (JCL)
-                    if self._rx_waveform(3, self._rx_change_count, timestamp):
-                        _LOGGER.debug("RX code " + str(self.rx_code))
-                    self._rx_repeat_count = 0
+                    for pnum in range(3, 4):
+                        if self._rx_waveform(4, self._rx_change_count, timestamp):
+                            _LOGGER.debug("RX code " + str(self.rx_code))
+                            break
+                        self._rx_repeat_count = 0
             self._rx_change_count = 0
 
         if self._rx_change_count >= MAX_CHANGES:

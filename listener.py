@@ -32,8 +32,8 @@ data_len = 32
 check_sum_len = 4
 header_len = sender_len + receiver_len + datetime_len + control_code_len;
 
-
-rfdevice = None
+rxdevice = None
+txdevice = None
 
 #Binary number 1-7
 number = "010"
@@ -50,10 +50,10 @@ def SendAck(inbound):
 	checksum = bin(int(hash[-1], 16))[2:].zfill(4)
 	packet += checksum
 
-	rfdevice = RFDevice(17)
-	rfdevice.enable_tx()
-	rfdevice.tx_code(str(packet))
-	rfdevice.cleanup()
+	txdevice = RFDevice(17)
+	txdevice.enable_tx()
+	txdevice.tx_code(str(packet))
+	txdevice.cleanup()
 
 def ForMe(inbound, Ack):
 	packet = inbound[:-4]
@@ -73,6 +73,8 @@ def ForMe(inbound, Ack):
 			output, error = process.communicate()
 			if Ack:
 				SendAck(inbound)
+	else:
+		print(inbound)
 
 def Forward(inbound):
 	packet = inbound[:-4]
@@ -81,31 +83,31 @@ def Forward(inbound):
 
 	if(checksum == inbound[-4:] and inbound[3:6] != "000" and inbound[3:6] != number):
 		print("Forwarding from "+str(int(inbound[3:6], 2))+" to "+str(int(inbound[:3], 2))+"!")
-		rfdevice = RFDevice(17)
-		rfdevice.enable_tx()
-		rfdevice.tx_code(str(inbound))
-		rfdevice.cleanup()
+		txdevice = RFDevice(17)
+		txdevice.enable_tx()
+		txdevice.tx_code(str(inbound))
+		txdevice.cleanup()
 
 def exithandler(signal, frame):
-	rfdevice.cleanup()
+	rxdevice.cleanup()
 	sys.exit(0)
 
 ###################################################33
 
 signal.signal(signal.SIGINT, exithandler)
-# Listen on GPIO 27
-rfdevice = RFDevice(27)
-rfdevice.enable_rx()
 timestamp = None
-logging.info("Listening for codes on GPIO " + str(27))
-
 past_packets = []
+
+# Listen on GPIO 27
+rxdevice = RFDevice(27)
+rxdevice.enable_rx()
+
 while True:
-	if rfdevice.rx_code_timestamp != timestamp:
-		timestamp = rfdevice.rx_code_timestamp
-	if(len(str(rfdevice.rx_code)) > 20):
-		inbound = str(rfdevice.rx_code)
-		rfdevice.rx_code = 0;
+	if rxdevice.rx_code_timestamp != timestamp:
+		timestamp = rxdevice.rx_code_timestamp
+	if(len(str(rxdevice.rx_code)) > 20):
+		inbound = str(rxdevice.rx_code)
+		rxdevice.rx_code = 0;
 
 		#Filters only duplicates within a session
 		if inbound not in past_packets:
@@ -123,4 +125,4 @@ while True:
 					Forward(inbound)
 #		else Duplicate dropped
 	time.sleep(0.01)
-rfdevice.cleanup()
+rxdevice.cleanup()
