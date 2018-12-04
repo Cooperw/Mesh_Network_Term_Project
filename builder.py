@@ -46,7 +46,7 @@ def extend(inp, length):
 ######################################################
 
 # Set From Address, binary 1-7
-from_adr = "001"
+from_adr = "010"
 
 if(len(sys.argv) != 4):
 	print(sys.argv[0] + " <to> <control_code> <message>")

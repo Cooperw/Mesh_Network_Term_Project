@@ -33,7 +33,7 @@ header_len = sender_len + receiver_len + datetime_len + control_code_len;
 rxdevice = None
 
 #Binary number 1-7
-number = "001"
+number = "010"
 
 def SendAck(inbound):
 	packet = ""
@@ -49,12 +49,6 @@ def SendAck(inbound):
 	bashCommand = "python3 ./send.py " + str(packet)
 	process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
 	output, error = process.communicate()
-
-	# Call processor
-	bashCommand = "python3 ./process_packets.py >> newMessages.log"
-	processTwo = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
-	output, error = processTwo.communicate()
-
 
 def ForMe(inbound, Ack):
 	packet = inbound[:-4]
@@ -74,6 +68,11 @@ def ForMe(inbound, Ack):
 			output, error = process.communicate()
 			if Ack:
 				SendAck(inbound)
+
+			# Call processor
+			bashCommand = "python3 ./process_packets.py >> newMessages.log"
+			processTwo = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
+			output, error = processTwo.communicate()
 
 def Forward(inbound):
 	packet = inbound[:-4]
