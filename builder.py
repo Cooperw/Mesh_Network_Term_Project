@@ -45,15 +45,21 @@ def extend(inp, length):
 # Set From Address, binary 1-7
 from_adr = "011"
 
+if(len(sys.argv) != 4):
+	print(sys.argv[0] + " <to> <control_code> <message>")
+	exit(1)
+
 # Get To Address
-to_adr = input('To Address: ')
+#to_adr = input('To Address: ')
+to_adr = sys.argv[1]
 if(int(to_adr) > maxBin(sender_len) or int(to_adr) < 0):
 	print("Addresses must be between 0 and "+str(maxBin(sender_len))+".")
 	exit(1)
 to_adr = toBin(to_adr, sender_len)
 
 #Get Control Code
-control_code = input('Control Code: ')
+#control_code = input('Control Code: ')
+control_code = sys.argv[2]
 if(int(control_code) > maxBin(control_code_len) or int(control_code) < 0):
 	print("Control codes must be between 0 and "+str(maxBin(control_code_len))+".")
 	exit(1)
@@ -65,7 +71,8 @@ seconds = str(int(seconds) % 3600)
 seconds = toBin(seconds, datetime_len)
 
 # Body
-message = input('Enter Message: ')
+#message = input('Enter Message: ')
+message = sys.argv[3]
 j = int(data_len / 7)		#max ascii in a packet
 n = j * maxBin(total_parts_len) #max ascii in a message
 body = ''.join(format(ord(x), 'b').zfill(7) for x in message)

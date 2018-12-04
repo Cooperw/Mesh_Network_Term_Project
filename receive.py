@@ -111,6 +111,7 @@ while True:
 		#Filters only duplicates within a session
 		if inbound not in past_packets:
 			past_packets.append(inbound)
+			print(inbound)
 			if inbound[:3] == "000":
 				#Capture and relay broadcast
 				ForMe(inbound)
