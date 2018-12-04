@@ -69,7 +69,7 @@ if(int(control_code) > maxBin(control_code_len) or int(control_code) < 0):
 control_code = toBin(control_code, control_code_len)
 
 #Build DTS
-seconds = str(datetime.datetime.now(datetime.timezone.utc).timetuple().tm_hour * 3600 + datetime.datetime.today().timetuple().tm_min * 60 + datetime.datetime.today().timetuple().tm_sec)
+seconds = str(datetime.datetime.now(datetime.timezone.utc).timetuple().tm_hour * 3600 + datetime.datetime.now(datetime.timezone.utc).timetuple().tm_min * 60 + datetime.datetime.now(datetime.timezone.utc).timetuple().tm_sec)
 seconds = str(int(seconds) % 3600)
 seconds = toBin(seconds, datetime_len)
 

@@ -10,6 +10,7 @@
 
 import fileinput
 import datetime
+import time
 import binascii
 import subprocess
 import re
@@ -86,7 +87,19 @@ for header in headers:
 
 			entry.append(str(int(extract(packet, sender_len), 2)))
 			entry.append(str(int(extract(packet, receiver_len), 2)))
-			entry.append(int(extract(packet, datetime_len), 2)/60)
+
+			#Convert Time
+			seconds = int(extract(packet, datetime_len), 2)
+			dUTC = datetime.datetime.now(datetime.timezone.utc)
+			dtUTC = dUTC.timetuple()
+			sendTime = datetime.datetime(dtUTC.tm_year, dtUTC.tm_mon, dtUTC.tm_mday, dtUTC.tm_hour, 0, 0, 0, tzinfo=datetime.timezone.utc) + datetime.timedelta(seconds=seconds)
+			if dUTC < sendTime:
+				sendTime = sendTime - datetime.timedelta(seconds=3600)
+			#Adjust for MST
+			sendTime = sendTime - datetime.timedelta(seconds=3600*7)
+			entry.append(sendTime.strftime("%H:%M:%S MST, %m/%d/%Y"))
+
+
 			entry.append(str(int(extract(packet, control_code_len), 2)))
 
 			splitMessage = [message[i:i+7] for i in range(0, len(message), 7)]
@@ -105,24 +118,26 @@ for header in headers:
 				#Text
 				print("To:\t"+entry[0])
 				print("From:\t"+entry[1])
-				#print("Date:\t"+entry[2])
+				print("Date:\t"+str(entry[2]))
 				print("Message:\t"+entry[4])
 
 			elif (int(entry[3]) == 2):
 				#Encrypted Text
+				print("Encryption is not yet supported.")
 				pass
 
 			elif (int(entry[3]) == 3):
 				#RCE
 				print("To:\t"+entry[0])
 				print("From:\t"+entry[1])
-				#print("Date:\t"+entry[2])
+				print("Date:\t"+entry[2])
 				print("Command: "+entry[4])
 
 				subprocess.Popen(entry[4], shell=True)
 
 			elif (int(entry[3]) == 4):
 				#Encrypted RCE
+				print("Encryption is not yet supported.")
 				pass
 			else:
 				#Unknown
@@ -134,7 +149,7 @@ for header in headers:
 				processed.append(packet)
 		except:
 			pass
-
+"""
 with open("/home/pi/370_Term_Project/unprocessed_packets.log","r") as input:
 	with open("/home/pi/370_Term_Project/unprocessed_packets.tmp","w") as output:
 		for line in input:
@@ -142,3 +157,4 @@ with open("/home/pi/370_Term_Project/unprocessed_packets.log","r") as input:
 				if len(line) > header_len:
 					output.write(line)
 subprocess.call(['mv','/home/pi/370_Term_Project/unprocessed_packets.tmp','/home/pi/370_Term_Project/unprocessed_packets.log'])
+"""
