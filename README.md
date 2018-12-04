@@ -52,7 +52,7 @@ transmission. Our new library takes care of this bit automatially.
 ```
 pi@handset1:~/370_Term_Project $ ./listener.py 
 New data from 2!
-New data from 2!
+Forwarding from 4 to 3!
 New data from 2!
 New data from 2!
 ```
