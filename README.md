@@ -34,7 +34,7 @@ The control code is a 4 bit number which determines how the data is processed:
 
 Part Num and Total Parts together allow for a message to be divided up to a maximum of 
 16 parts which are re-assembled by the receiver.
-o
+
 You might have noticed the leading '1'. This is so that leading zeros are not lost during 
 transmission. Our new library takes care of this bit automatially.
 ```
