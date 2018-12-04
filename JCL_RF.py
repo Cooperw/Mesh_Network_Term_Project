@@ -202,7 +202,7 @@ class RFDevice:
                 if self._rx_repeat_count == 2:
 		# We cut down on the loop to save time from checking unused protocols (JCL)
                     for pnum in range(3, 4):
-                        if self._rx_waveform(4, self._rx_change_count, timestamp):
+                        if self._rx_waveform(pnum, self._rx_change_count, timestamp):
                             _LOGGER.debug("RX code " + str(self.rx_code))
                             break
                         self._rx_repeat_count = 0

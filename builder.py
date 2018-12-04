@@ -120,6 +120,10 @@ for piece in splitBody:
 ackPackets = []
 sendCount = 0
 subprocess.Popen("echo '' > ack.log", shell=True, stdout=subprocess.PIPE)
+
+rfdevice = RFDevice(17)
+rfdevice.enable_tx()
+
 with open("ack.log", "r+b") as file:
 	while len(myPackets) is not len(ackPackets) and sendCount < 5:
 		sendCount += 1
@@ -129,10 +133,10 @@ with open("ack.log", "r+b") as file:
 				print(str(i)+":"+myPackets[i]) #binary packet
 
 				#Set up Tx on GPIO 17
-				rfdevice = RFDevice(17)
-				rfdevice.enable_tx()
+#				rfdevice = RFDevice(17)
+#				rfdevice.enable_tx()
 				rfdevice.tx_code(str(myPackets[i]))
-				rfdevice.cleanup()
+#				rfdevice.cleanup()
 
 				try:
 					mm = mmap.mmap(file.fileno(), 0)
@@ -143,3 +147,4 @@ with open("ack.log", "r+b") as file:
 						ackPackets.append(ind)
 				except:
 					pass
+rfdevice.cleanup()
