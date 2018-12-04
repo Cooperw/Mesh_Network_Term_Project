@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
-
-################################################################################################
-#           S  A  M  P  L  E      1  0  0    B  I  T      J  C      P  A  C  K  E  T           #
-################################################################################################
-# Sender | Receiver | DateTime | Control Code | Part Num | Total Parts |   Data    | Check Sum #
-#--------|----------|----------|--------------|----------|-------------|-----------|-----------#
-#   3    |     3    |    12    |       4      |     4    |      4      |    32     |     4     #
-################################################################################################
+##########################################################################################################
+#                           S  A  M  P  L  E     J  C  L    P  A  C  K  E  T                             #
+##########################################################################################################
+# Leading | Sender | Receiver | DateTime | Control Code | Part Num | Total Parts |   Data    | Check Sum #
+#---------|--------|----------|----------|--------------|----------|-------------|-----------|-----------#
+#    1    |   3    |     3    |    12    |       4      |     4    |      4      |    32     |     4     #
+##########################################################################################################
 
 import hashlib
 import subprocess
@@ -15,6 +14,8 @@ import datetime
 import re
 import sys
 import mmap
+
+from JCL_RF import RFDevice
 
 ######################################################
 # Vars
@@ -126,9 +127,13 @@ with open("ack.log", "r+b") as file:
 		for i in range(0,len(myPackets)):
 			if i not in ackPackets:
 				print(str(i)+":"+myPackets[i]) #binary packet
-				bashCommand = "python3 send.py " + str(myPackets[i])
-				process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
-				output, error = process.communicate()
+
+				#Set up Tx on GPIO 17
+				rfdevice = RFDevice(17)
+				rfdevice.enable_tx()
+				rfdevice.tx_code(str(myPackets[i]))
+				rfdevice.cleanup()
+
 				try:
 					mm = mmap.mmap(file.fileno(), 0)
 					line = mm.readline().decode()
