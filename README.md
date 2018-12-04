@@ -62,9 +62,11 @@ New data from 2!
 pi@handset1:~/370_Term_Project $ cat newMessages.log 
 To:     0
 From:   2
+Date:   03:29:19 MST, 12/04/2018
 Message:        Hey!
 To:     1
 From:   2
+Date:   04:51:05 MST, 12/04/2018
 Message:        Hello how are you?
 ```
 
