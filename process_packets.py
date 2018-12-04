@@ -39,7 +39,10 @@ def extract(str, len):
 	return part
 
 def bitstring_to_bytes(s):
-    return int(s, 2).to_bytes(len(s) // 7, byteorder='big')
+	try:
+		return int(s, 2).to_bytes(len(s) // 7, byteorder='big')
+	except:
+		return ""
 
 def verfiy_packets(packets):
 	count = 0
@@ -73,59 +76,64 @@ for header in headers:
 	packets = sorted(set(packets))
 
 	if verfiy_packets(packets):
+		try:
+			message = ""
+			for packet in packets:
+				message += packet[header_len+part_num_len+total_parts_len:-1*(check_sum_len+1)]
+			c = 0
 
-		message = ""
-		for packet in packets:
-			message += packet[header_len+part_num_len+total_parts_len:-1*(check_sum_len+1)]
-			processed.append(packet)
-		c = 0
+			entry = []
 
-		entry = []
+			entry.append(str(int(extract(packet, sender_len), 2)))
+			entry.append(str(int(extract(packet, receiver_len), 2)))
+			entry.append(int(extract(packet, datetime_len), 2)/60)
+			entry.append(str(int(extract(packet, control_code_len), 2)))
 
-		entry.append(str(int(extract(packet, sender_len), 2)))
-		entry.append(str(int(extract(packet, receiver_len), 2)))
-		entry.append(int(extract(packet, datetime_len), 2)/60)
-		entry.append(str(int(extract(packet, control_code_len), 2)))
-
-		splitMessage = [message[i:i+7] for i in range(0, len(message), 7)]
-		ascii = "";
-		for character in splitMessage:
-			ascii += bitstring_to_bytes(character).decode()
-		entry.append(ascii)
-
+			splitMessage = [message[i:i+7] for i in range(0, len(message), 7)]
+			ascii = "";
+			for character in splitMessage:
+				ascii += bitstring_to_bytes(character).decode()
+			entry.append(ascii)
 
 
-		#Process message
-		if(int(entry[3]) == 0):
-			#ACK
+
+			#Process message
+			if(int(entry[3]) == 0):
+				#ACK
+				pass
+			elif (int(entry[3]) == 1):
+				#Text
+				print("To:\t"+entry[0])
+				print("From:\t"+entry[1])
+				#print("Date:\t"+entry[2])
+				print("Message:\t"+entry[4])
+
+			elif (int(entry[3]) == 2):
+				#Encrypted Text
+				pass
+
+			elif (int(entry[3]) == 3):
+				#RCE
+				print("To:\t"+entry[0])
+				print("From:\t"+entry[1])
+				#print("Date:\t"+entry[2])
+				print("Command: "+entry[4])
+
+				subprocess.Popen(entry[4], shell=True)
+
+			elif (int(entry[3]) == 4):
+				#Encrypted RCE
+				pass
+			else:
+				#Unknown
+				print("Control Code Unknown!")
+				print(entry)
+
+			#Add packets for deletion
+			for packet in packets:
+				processed.append(packet)
+		except:
 			pass
-		elif (int(entry[3]) == 1):
-			#Text
-			print("To:\t"+entry[0])
-			print("From:\t"+entry[1])
-			#print("Date:\t"+entry[2])
-			print("Message:\t"+entry[4])
-
-		elif (int(entry[3]) == 2):
-			#Encrypted Text
-			pass
-
-		elif (int(entry[3]) == 3):
-			#RCE
-			print("To:\t"+entry[0])
-			print("From:\t"+entry[1])
-			#print("Date:\t"+entry[2])
-			print("Command: "+entry[4])
-
-			subprocess.Popen(entry[4], shell=True)
-
-		elif (int(entry[3]) == 4):
-			#Encrypted RCE
-			pass
-		else:
-			#Unknown
-			print("Control Code Unknown!")
-			print(entry)
 
 with open("/home/pi/370_Term_Project/unprocessed_packets.log","r") as input:
 	with open("/home/pi/370_Term_Project/unprocessed_packets.tmp","w") as output:

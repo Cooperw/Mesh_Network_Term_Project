@@ -9,11 +9,9 @@
 ##########################################################################################################
 
 import hashlib
-import argparse
 import signal
 import sys
 import time
-import logging
 import subprocess
 import mmap
 
@@ -35,7 +33,7 @@ header_len = sender_len + receiver_len + datetime_len + control_code_len;
 rxdevice = None
 
 #Binary number 1-7
-number = "010"
+number = "001"
 
 def SendAck(inbound):
 	packet = ""
@@ -75,7 +73,6 @@ def ForMe(inbound, Ack):
 			process = subprocess.Popen(bashCommand, stdout=subprocess.PIPE, shell=True)
 			output, error = process.communicate()
 			if Ack:
-				print("Sending Ack")
 				SendAck(inbound)
 
 def Forward(inbound):
@@ -91,7 +88,6 @@ def Forward(inbound):
 
 def exithandler(signal, frame):
 	rxdevice.cleanup()
-	txdevice.cleanup()
 	sys.exit(0)
 
 ###################################################33
