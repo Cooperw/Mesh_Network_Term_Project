@@ -1,6 +1,6 @@
 # 370_Term_Project
  
- [Research Paper](https://docs.google.com/document/d/1md42hgmRbyNFEaRCGNOWeDeKLlxpM2QFYUlWu7wMmf0/edit?usp=sharing)
+ [Research Paper (Final)](https://docs.google.com/document/d/1md42hgmRbyNFEaRCGNOWeDeKLlxpM2QFYUlWu7wMmf0/edit?usp=sharing)
  
  [Reserach Paper (Old)](https://docs.google.com/document/d/1NyC_Sf42hO-JUMay74-VKHViBrYexRQepyeW85B04mw/edit?usp=sharing)
  
