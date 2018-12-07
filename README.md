@@ -1,10 +1,6 @@
 # 370_Term_Project
  
- [Research Paper (Final)](https://docs.google.com/document/d/1md42hgmRbyNFEaRCGNOWeDeKLlxpM2QFYUlWu7wMmf0/edit?usp=sharing)
- 
- [Reserach Paper (Old)](https://docs.google.com/document/d/1NyC_Sf42hO-JUMay74-VKHViBrYexRQepyeW85B04mw/edit?usp=sharing)
- 
- [Outline](https://docs.google.com/document/d/1OVfjGXZzx0KkbRxPxZe4xIjUputQPQnoWX9WUllVHjY/edit?usp=sharing)
+ [Research Paper](https://drive.google.com/open?id=1yzBuh9Xlhe53lLmGqgGAuuPcmVzS0D-d)
  
  Developed by Cooper Wiegand, John Vanderhoofven, and Jiping Lu at Colorado State University.
 
