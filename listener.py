@@ -33,7 +33,7 @@ header_len = sender_len + receiver_len + datetime_len + control_code_len;
 rxdevice = None
 
 #Binary number 1-7
-number = "010"
+number = "001"
 
 def SendAck(inbound):
 	packet = ""

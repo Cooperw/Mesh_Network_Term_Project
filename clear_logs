@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "" > newMessages.log
+echo "" > unprocessed_packets.log

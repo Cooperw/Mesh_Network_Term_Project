@@ -52,8 +52,10 @@ def verfiy_packets(packets):
 			count += 1
 		else:
 			return False
-	return True
-
+	if (count-1) == int(packet[header_len+part_num_len:header_len+part_num_len+total_parts_len], 2):
+		return True
+	else:
+		return False
 ######################################################
 
 processed = []
@@ -149,7 +151,7 @@ for header in headers:
 				processed.append(packet)
 		except:
 			pass
-"""
+
 with open("/home/pi/370_Term_Project/unprocessed_packets.log","r") as input:
 	with open("/home/pi/370_Term_Project/unprocessed_packets.tmp","w") as output:
 		for line in input:
@@ -157,4 +159,3 @@ with open("/home/pi/370_Term_Project/unprocessed_packets.log","r") as input:
 				if len(line) > header_len:
 					output.write(line)
 subprocess.call(['mv','/home/pi/370_Term_Project/unprocessed_packets.tmp','/home/pi/370_Term_Project/unprocessed_packets.log'])
-"""
