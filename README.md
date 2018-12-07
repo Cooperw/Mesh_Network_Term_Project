@@ -1,6 +1,7 @@
 # 370_Term_Project
  
  [Demo Video](https://www.youtube.com/watch?v=o8EDP-yPp6c)
+ 
  [Research Paper](https://drive.google.com/open?id=1yzBuh9Xlhe53lLmGqgGAuuPcmVzS0D-d)
  
  Developed by Cooper Wiegand, John Vanderhoofven, and Jiping Lu at Colorado State University.
