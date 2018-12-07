@@ -97,7 +97,7 @@ We sent a command to all devices on our network. The 0 below means broadcast and
 in a terminal and not a text message. Broadcasts do not supports acks like texts do but each packet is still
 sent 5 times.
 ```
-pi@handset2:~/370_Term_Project $ ./builder.py 0 3 "sudo activateLights"
+pi@handset2:~/370_Term_Project $ ./builder.py 0 3 "./led g"
 Received 0/5: []
 0:000010000011011110001100000100111001111101011100100110111101001000
 1:000010000011011110001100010100000110000111000111110100110100110110
