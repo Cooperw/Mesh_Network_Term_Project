@@ -3,7 +3,7 @@
 
 import sys
 
-from JCL_RF import RFDevice
+from JCL_RF import RFDevicee
 
 txdevice = None
 txdevice = RFDevice(17)
